@@ -6,10 +6,55 @@ import chroma from "chroma-js";
 import * as THREE from "three";
 import "three/OrbitControls";
 import "three/SVGLoader";
+import lottie from "lottie-web";
+import animationData from "./eye.json";
+import faceSVG from "./egg.svg";
+import aboutSVG from "./ABOUT.svg";
+
+const lottieEl = document.getElementById("lottie-container");
+const animation = lottie.loadAnimation({
+  container: lottieEl,
+  renderer: "svg",
+  loop: false,
+  autoplay: false,
+  animationData,
+});
+let frame;
+animation.onComplete = () => animation.stop();
+lottieEl.onclick = () => (location.href = "https://eyes.klevecz.net");
 import { onMouseMove, loadSVG } from "./utils.js";
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 var click = false;
+
+const faceContainer = document.getElementById("face-container");
+faceContainer.onclick = () => {
+  location.href = "https://yaytso.art";
+  // history.pushState("", "about", "/about");
+  // document.getElementById("face-container").style.display = "none";
+  // document.getElementById("lottie-container").style.display = "none";
+  // document.querySelector("canvas").style.display = "none";
+  // cancelAnimationFrame(frame);
+  // const container = document.createElement("div");
+  // container.id = "about-container";
+  // container.style.width = "100%";
+  // container.style.background = "white";
+  // container.innerHTML = aboutSVG;
+
+  // container.style.position = "absolute";
+  // container.style.top = "0px";
+
+  // document.body.prepend(container);
+};
+window.onpopstate = () => {
+  document.getElementById("about-container").remove();
+  document.getElementById("face-container").style.display = "block";
+  document.getElementById("lottie-container").style.display = "block";
+  document.querySelector("canvas").style.display = "block";
+  animate();
+};
+
+faceContainer.innerHTML = faceSVG;
 
 // Create a scene
 var camera, scene, renderer, clock, stats;
@@ -74,7 +119,7 @@ function initScene() {
   material = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     shininess: 0,
-    specular: 0x222222
+    specular: 0x222222,
   });
   sphere = new THREE.Mesh(geometry, material);
   sphere.scale.multiplyScalar(1 / 18);
@@ -88,7 +133,7 @@ function initScene() {
   var material = new THREE.MeshPhongMaterial({
     color: 0xffffff,
     shininess: 0,
-    specular: 0x111111
+    specular: 0x111111,
   });
   ground = new THREE.Mesh(geometry, material);
   ground.rotation.x = -Math.PI / 2;
@@ -118,7 +163,7 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function animate() {
-  requestAnimationFrame(animate);
+  frame = requestAnimationFrame(animate);
   render();
 }
 function renderScene() {
@@ -138,7 +183,7 @@ function render() {
       intersects[i].object.material.color.set(0xff0000);
       if (intersects[i].object.name === "chicken") {
         // material_name.color.set(0x000000);
-        var ariel_material = scene.children.filter(f => f.name === "ariel")[0]
+        var ariel_material = scene.children.filter((f) => f.name === "ariel")[0]
           .children[0].material;
         ariel_material.color.set(0xff0000);
       }
@@ -149,16 +194,25 @@ function render() {
   sphere.rotation.y += 2 * delta;
   sphere.rotation.z += 1 * delta;
   const randomColor = chroma.random();
+  if (Math.floor(time % 5) === 0) animation.play();
   // sphere.material.color = new THREE.Color(randomColor.hex());
 
   // dirGroup.rotation.y += 0.7 * delta;
   // dirLight.position.z = 17 + Math.sin(time*0.001)*5;
 }
 
-// window.addEventListener("touchstart",onMouseMove, false);
+window.addEventListener(
+  "touchstart",
+  (e) => {
+    const m = onMouseMove(e, mouse);
+    click = true;
+    mouse = m;
+  },
+  false
+);
 window.addEventListener(
   "click",
-  e => {
+  (e) => {
     const m = onMouseMove(e, mouse);
     click = true;
     mouse = m;

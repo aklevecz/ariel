@@ -54,16 +54,16 @@ export async function loadSVG(scene) {
           group.add(mesh);
         }
       }
-      var pgeo = new THREE.PlaneBufferGeometry(1, 1, 1);
-      var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        shininess: 0,
-        specular: 0x222222
-      });
-      var mesh = new THREE.Mesh(pgeo, material);
-      mesh.name = "ariel_plate";
+      // var pgeo = new THREE.PlaneBufferGeometry(1, 1, 1);
+      // var material = new THREE.MeshPhongMaterial({
+      //   color: 0xffffff,
+      //   shininess: 0,
+      //   specular: 0x222222
+      // });
+      // var mesh = new THREE.Mesh(pgeo, material);
+      // mesh.name = "ariel_plate";
       scene.add(group);
-      scene.add(mesh);
+      // scene.add(mesh);
     },
     // called when loading is in progresses
     function(xhr) {

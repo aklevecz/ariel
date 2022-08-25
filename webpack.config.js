@@ -5,18 +5,29 @@ const path = require("path");
 module.exports = {
   mode: "production",
   entry: {
-    main: "./src/index.js"
+    main: "./src/index.js",
   },
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist")
+    filename:
+      process.env.NODE_ENV === "development"
+        ? "[name].js"
+        : "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
   },
   plugins: [
     new HtmlWebpackPlugin({ template: "./views/index.html" }),
     new webpack.ProvidePlugin({
-      THREE: "three"
-    })
+      THREE: "three",
+    }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.svg$/,
+        loader: "svg-inline-loader",
+      },
+    ],
+  },
   resolve: {
     alias: {
       "three/OrbitControls": path.join(
@@ -26,7 +37,7 @@ module.exports = {
       "three/SVGLoader": path.join(
         __dirname,
         "node_modules/three/examples/js/loaders/SVGLoader.js"
-      )
-    }
-  }
+      ),
+    },
+  },
 };

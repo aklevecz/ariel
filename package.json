@@ -7,17 +7,20 @@
     "dev": "webpack-dev-server",
     "start": "webpack && node server.js",
     "build": "webpack",
-    "predeploy": "npm run build && copy CNAME dist\\CNAME",
+    "predeploy:win": "npm run build && copy CNAME dist\\CNAME && copy eye.png dist\\eye.png && copy dist\\index.html dist\\404.html",
+    "predeploy": "npm run build && cp CNAME dist/CNAME && cp eye.png dist/eye.png && cp dist/index.html dist/404.html",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "chroma-js": "*",
     "express": "^4.14.1",
-    "three": "^0.110.0",
-    "chroma-js": "*"
+    "lottie-web": "^5.6.3",
+    "three": "^0.110.0"
   },
   "devDependencies": {
     "gh-pages": "^2.1.1",
     "html-webpack-plugin": "*",
+    "svg-inline-loader": "^0.8.2",
     "webpack": "*",
     "webpack-cli": "*",
     "webpack-dev-server": "^3.9.0"
