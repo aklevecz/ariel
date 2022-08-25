@@ -15,7 +15,7 @@
     "chroma-js": "*",
     "express": "^4.14.1",
     "lottie-web": "^5.6.3",
-    "three": "^0.110.0"
+    "three": "^0.125.0"
   },
   "devDependencies": {
     "gh-pages": "^2.1.1",
