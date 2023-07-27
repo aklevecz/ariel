@@ -29,7 +29,7 @@ var click = false;
 
 const faceContainer = document.getElementById("face-container");
 faceContainer.onclick = () => {
-  location.href = "https://yaytso.art";
+  location.href = "https://info.yaytso.art";
   // history.pushState("", "about", "/about");
   // document.getElementById("face-container").style.display = "none";
   // document.getElementById("lottie-container").style.display = "none";
